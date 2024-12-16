@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    android:weightSum="100"
+    android:padding="100dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Log in to Chatbox"
+        android:textStyle="bold"
+        android:textSize="33sp"
+        android:layout_weight="10"
+
+
+        android:textColor="@color/black"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textColor="#797C7B"
+        android:gravity="center"
+
+        android:text="Welcome back! Sign in using your social\n account or email to continue us"
+        />
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your email"
+        android:textSize="18sp"
+        android:textColor="#24786D"
+        android:textStyle="bold"/>
+
+
+</LinearLayout>

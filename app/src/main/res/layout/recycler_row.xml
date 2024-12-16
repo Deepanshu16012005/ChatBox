@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/edit_text_background"
+    android:elevation="4dp"
+    android:layout_margin="10dp">
+    <include layout="@layout/profile_pic"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/recycler_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Useranme"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:letterSpacing="0.04"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Useranme"
+            android:id="@+id/recycler_email"
+            android:textColor="@color/grey"
+            android:textStyle="bold"
+            android:letterSpacing="0.04"
+            />
+    </LinearLayout>
+</LinearLayout>
