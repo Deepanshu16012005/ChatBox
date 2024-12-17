@@ -6,7 +6,7 @@ public class ChatMessageModel {
     private String message;
     private String senderId;
     private Timestamp timestamp;
-    private String messageId;
+    //private String messageId;
 
 
 
@@ -14,19 +14,13 @@ public class ChatMessageModel {
 
     }
 
-    public String getMessageId() {
-        return messageId;
-    }
 
-    public void setMessageId(String messageId) {
-        this.messageId = messageId;
-    }
 
-    public ChatMessageModel(String message, String senderId, Timestamp timestamp, String messageId) {
+    public ChatMessageModel(String message, String senderId, Timestamp timestamp) {
         this.message = message;
         this.senderId = senderId;
         this.timestamp = timestamp;
-        this.messageId = messageId;
+        //this.messageId = messageId;
     }
 
     public String getMessage() {

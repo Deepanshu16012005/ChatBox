@@ -67,23 +67,46 @@ public class ChatActivity extends AppCompatActivity {
                 return;
             }
             sendMessageToUser(msg);
+            messageInput.setText("");
         });
     }
 
     void sendMessageToUser(String msg) {
+//        ChatroomModel chatroomModel = new ChatroomModel(chatRoomId,Arrays.asList(FirebaseUtils.getCurrentUserId(),othermodel.getUserId()),FirebaseUtils.getCurrentUserId());
+//        FirebaseUtils.chatroomref(chatRoomId).setValue(chatroomModel);
+        FirebaseUtils.chatroomMessageReference(chatRoomId).push()
+                .setValue(new ChatMessageModel(msg,FirebaseUtils.getCurrentUserId(),Timestamp.now()));
+        FirebaseUtils.chatroomref(chatRoomId).child("lastMessageSenderId").setValue(FirebaseUtils.getCurrentUserId());
+
 
     }
 
     void getOrCreateChatRoomModel() {
         FirebaseUtils.chatroomref(chatRoomId).get().addOnCompleteListener(task -> {
-            chatroomModel=task.getResult().getValue(ChatroomModel.class);
-            if(chatroomModel==null){
-                // first time chat
-                chatroomModel=new ChatroomModel(
-                        chatRoomId,
-                        Arrays.asList(FirebaseUtils.getCurrentUserId(),othermodel.getUserId()),"");
-                FirebaseUtils.chatroomref(chatRoomId).setValue(chatroomModel);
+            if (task.isSuccessful()) {
+                chatroomModel = task.getResult().getValue(ChatroomModel.class);
+                if (chatroomModel == null) {
+                    // first time chat
+                    chatroomModel = new ChatroomModel(
+                            chatRoomId,
+                            Arrays.asList(FirebaseUtils.getCurrentUserId(), othermodel.getUserId()),
+                             "");
+                    FirebaseUtils.chatroomref(chatRoomId).setValue(chatroomModel);
+                }
+            } else {
+                // Handle error fetching chatroom model
+                Log.e("ChatActivity", "Error getting chatroom model", task.getException());
             }
         });
+//        FirebaseUtils.chatroomref(chatRoomId).get().addOnCompleteListener(task -> {
+//            chatroomModel=task.getResult().getValue(ChatroomModel.class);
+//            if(chatroomModel==null){
+//                // first time chat
+//                chatroomModel=new ChatroomModel(
+//                        chatRoomId,
+//                        Arrays.asList(FirebaseUtils.getCurrentUserId(),othermodel.getUserId()),Timestamp.now(),"");
+//                FirebaseUtils.chatroomref(chatRoomId).setValue(chatroomModel);
+//            }
+//        });
     }
 }
