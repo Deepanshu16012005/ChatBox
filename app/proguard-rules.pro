@@ -1,4 +1,8 @@
-# Add project specific ProGuard rules here.
+# Keep Firebase Timestamp class
+-keep class com.google.firebase.Timestamp { *; }
+
+# Keep your model classes
+-keep class com.example.chatbox.models.** { *; }# Add project specific ProGuard rules here.
 # You can control the set of applied configuration files using the
 # proguardFiles setting in build.gradle.
 #

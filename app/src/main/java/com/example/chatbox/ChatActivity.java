@@ -13,18 +13,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.chatbox.adapters.ChatRecyclerAdapter;
+import com.example.chatbox.adapters.SearchUserRecyclerAdapter;
 import com.example.chatbox.models.ChatMessageModel;
 import com.example.chatbox.models.ChatroomModel;
 import com.example.chatbox.utils.AndroidUtil;
 import com.example.chatbox.utils.FirebaseUtils;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.Timestamp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
@@ -35,6 +41,8 @@ public class ChatActivity extends AppCompatActivity {
     ImageButton sendButton,backButton;
     RecyclerView recyclerView;
     String chatRoomId;
+    ChatRecyclerAdapter adapter;
+    DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +58,7 @@ public class ChatActivity extends AppCompatActivity {
         messageInput = findViewById(R.id.msg_input_chat_activity);
         sendButton = findViewById(R.id.send_btn_chat_activity);
         backButton = findViewById(R.id.back_chat_inside_activity);
-        //recyclerView = findViewById(R.id.recycler_view_chat_activity);
+        recyclerView = findViewById(R.id.recycler_view_chat_activity);
         chatRoomId=FirebaseUtils.getChatroomId(FirebaseUtils.getCurrentUserId(),othermodel.getUserId());
 
         UserName.setText(othermodel.getUserName());
@@ -61,6 +69,7 @@ public class ChatActivity extends AppCompatActivity {
             finish();
         });
         getOrCreateChatRoomModel();
+        setUpChatRecyclerView();
         sendButton.setOnClickListener(view -> {
             String msg=messageInput.getText().toString().trim();
             if(msg.isEmpty()){
@@ -71,13 +80,21 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    void sendMessageToUser(String msg) {
-//        ChatroomModel chatroomModel = new ChatroomModel(chatRoomId,Arrays.asList(FirebaseUtils.getCurrentUserId(),othermodel.getUserId()),FirebaseUtils.getCurrentUserId());
-//        FirebaseUtils.chatroomref(chatRoomId).setValue(chatroomModel);
-        FirebaseUtils.chatroomMessageReference(chatRoomId).push()
-                .setValue(new ChatMessageModel(msg,FirebaseUtils.getCurrentUserId(),Timestamp.now()));
-        FirebaseUtils.chatroomref(chatRoomId).child("lastMessageSenderId").setValue(FirebaseUtils.getCurrentUserId());
+    void setUpChatRecyclerView() {
+        //String lowercaseSearchQuery = searchedUser;
+        Query query= FirebaseUtils.chatroomMessageReference(chatRoomId).orderByChild("timestamp");
+        FirebaseRecyclerOptions<ChatMessageModel> options=new FirebaseRecyclerOptions.Builder<ChatMessageModel>().setQuery(query,ChatMessageModel.class).build();
+        adapter=new ChatRecyclerAdapter(options);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
+    }
 
+    void sendMessageToUser(String msg) {
+
+        FirebaseUtils.chatroomMessageReference(chatRoomId).push()
+                .setValue(new ChatMessageModel(msg,FirebaseUtils.getCurrentUserId(),new Date()));
+        FirebaseUtils.chatroomref(chatRoomId).child("lastMessageSenderId").setValue(FirebaseUtils.getCurrentUserId());
 
     }
 

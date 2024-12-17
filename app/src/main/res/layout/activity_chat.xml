@@ -46,12 +46,12 @@
             android:textSize="22sp"
             android:textStyle="bold" />
     </RelativeLayout>
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_below="@id/toolbar_chat_inside_activity"-->
-<!--        android:id="@+id/recycler_view_chat_activity"-->
-<!--        android:layout_above="@+id/navigation_bar_chat_activity"/>-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_chat_inside_activity"
+        android:id="@+id/recycler_view_chat_activity"
+        android:layout_above="@+id/navigation_bar_chat_activity"/>
 
     <RelativeLayout
         android:id="@+id/navigation_bar_chat_activity"

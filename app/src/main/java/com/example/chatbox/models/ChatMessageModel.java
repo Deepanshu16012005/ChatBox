@@ -2,10 +2,12 @@ package com.example.chatbox.models;
 
 import com.google.firebase.Timestamp;
 
+import java.util.Date;
+
 public class ChatMessageModel {
     private String message;
     private String senderId;
-    private Timestamp timestamp;
+    private Date timestamp;
     //private String messageId;
 
 
@@ -16,7 +18,7 @@ public class ChatMessageModel {
 
 
 
-    public ChatMessageModel(String message, String senderId, Timestamp timestamp) {
+    public ChatMessageModel(String message, String senderId, Date timestamp) {
         this.message = message;
         this.senderId = senderId;
         this.timestamp = timestamp;
@@ -39,11 +41,11 @@ public class ChatMessageModel {
         this.senderId = senderId;
     }
 
-    public Timestamp getTimestamp() {
+    public Date getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
 }
